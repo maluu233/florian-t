@@ -1,0 +1,4 @@
+aside#left-sidebar {
+    top: 35px;
+    z-index: -1;
+}
