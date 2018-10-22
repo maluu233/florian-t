@@ -4,11 +4,23 @@
     aside#left-sidebar {
     top: 35px;
     }
+    .block-a {
+        font-size: 25px;
+        position: relative;
+       
+    }
+    #map-canvas {
+        height: 500px;
+    }
     main thead td {
         font-weight: bold;
         text-align: center;
     }
     main tbody td {
+        text-align: center;
+    }
+
+    main thead th {
         text-align: center;
     }
     .button_ref {

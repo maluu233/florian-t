@@ -28,7 +28,10 @@ class CreateObjectFloriansTable extends Migration
             $table->string('system_type')->nullable();
             $table->integer('quanity_napryamkiv')->nullable();
             $table->integer('quanity_module')->nullable();
-            $table->integer('vidpovidalnuy');
+            //$table->integer('vidpovidalnuy')->nullable();
+            $table->integer('vidpovidalnuy')->unsigned();
+            //rest of fields then...
+            $table->foreign('vidpovidalnuy')->references('id')->on('users');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

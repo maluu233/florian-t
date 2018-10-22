@@ -1,7 +1,111 @@
 @extends('layouts.app')
 
-@section('content')
-   <h1 class="text-center">Редагувати об'єкт {{$ObjectFlorian->name}}</h1>
+@section('content') 
+   <h1 class="text-center">Перегляд об'єкту {{$ObjectFlorian->name}}</h1>
+   <div class="card">
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAfog9ogzYEHhX16nGTjw6iiYKbDjlHgM&callback=initMap"
+    async defer></script>
+<form>
+    <input type="text" name="address" id="address" value="Sydney, NSW">
+    <input type="submit" value="Search" id="searchItem">
+</form>
+<div id="map-canvas" /></div>
+<script>
+var myLatlng = new google.maps.LatLng(31.272410, 0.190898);
+
+
+// INITALIZATION
+ function initialize() {
+     var mapOptions = {
+         zoom: 4,
+         center: myLatlng,
+         mapTypeId: google.maps.MapTypeId.ROADMAP
+     }
+     var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+ }
+
+
+// GEOCODE
+  function codeAddress() {
+    var address = document.getElementById("address").value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        alert("Geocode was successful");
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      };
+    });
+  }
+
+
+// GET ADDRESS DETAILS
+ function getLatLongDetail() {
+     geocoder = new google.maps.Geocoder();
+     geocoder.geocode({
+         'latLng': myLatlng
+     },
+     function (results, status) {
+         if (status == google.maps.GeocoderStatus.OK) {
+             if (results[0]) {
+                 var address = "Зодчих 12",
+                     city = "Винница",
+                     state = "",
+                     zip = "",
+                     country = "Украина";
+                 for (var i = 0; i < results[0].address_components.length; i++) {
+                     var addr = results[0].address_components[i];
+                     // check if this entry in address_components has a type of country
+                     if (addr.types[0] == 'country') country = addr.long_name;
+                     else if (addr.types[0] == 'street_address') // address 1
+                     address = address + addr.long_name;
+                     else if (addr.types[0] == 'establishment') address = address + addr.long_name;
+                     else if (addr.types[0] == 'route') // address 2
+                     address = address + addr.long_name;
+                     else if (addr.types[0] == 'postal_code') // Zip
+                     zip = addr.short_name;
+                     else if (addr.types[0] == ['administrative_area_level_1']) // State
+                     state = addr.long_name;
+                     else if (addr.types[0] == ['locality']) // City
+                     city = addr.long_name;
+                 }
+                 alert('City: ' + city + '\n' + 'State: ' + state + '\n' + 'Zip: ' + zip + '\n' + 'Country: ' + country);
+             }
+         }
+     });
+ }
+
+ initialize();
+ getLatLongDetail();
+document.getElementById("searchItem").onclick = function() {
+    codeAddress();
+    return false;
+};
+</script>
+   </div>
+<br>
+<div class="card">
+<ul class="nav nav-tabs float-right" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Загальна інформація про об'єкт</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Інформація про АСПС</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Інформація про АСПГ</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+</div>
+</div>
+
+
+
   <form class="mx-auto row bg-secondary p-3 rounded my-4" action="/object/update" method="post">
     <div class="form-group col-4">
       <label>Введіть назву об'єкту</label>
@@ -70,4 +174,6 @@
 
 </div>
   </form>
-@endsection
+
+
+ @endsection 

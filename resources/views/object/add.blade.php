@@ -53,7 +53,13 @@
     </div>
     <div class="form-group col-4">
     <label>Введіть відповідального за об'єкт</label>
-      <input type="text" name="vidpovidalnuy" placeholder="Введіть відповідального за об'єкт" class="form-control" >
+    
+    <select name="vidpovidalnuy" required class="form-control">
+    @foreach($users as $user)
+      <option value="{{$user->id}}">{{$user->name}}</option>
+    @endforeach  
+   </select>
+      
     </div>
     {{csrf_field()}}
     

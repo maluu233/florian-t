@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\ObjectFlorian;
+use App\User; 
 
 class HomeController extends Controller
 {

@@ -8,40 +8,9 @@
                         <div class="collapse navbar-collapse align-items-start">
                             <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
                                 <li class="nav-item button_ref">
-                                    <a href="/object/add" class="text-secondary"><i class="fas fa-plus-square"></i></a>
-                                    <a href="#" class="text-secondary"><i class="fas fa-print "></i></a>
+                                    
                                 </li>
-                                <li class="nav-item">
-                                    <label class="nav-link pl-0 mb-0 text-nowrap" for="">Виберіть об'єкт</label>
-                                    <input class="w-100" type="text" name="object" id="object" list="object_list">
-                                    <datalist id="object_list">
-                                        <option>Усі</option>
-                                        <option>1</option>
-                                    </datalist>
-                                </li> 
-                                <li class="nav-item">
-                                    <label class="nav-link pl-0 mb-0 text-nowrap" for="">Виберіть район</label>
-                                    <input class="w-100" type="text" name="region" id="region" list="region_list">
-                                    <datalist id="region_list">
-                                        <option>Усі</option>
-                                        <option>Вишенька</option>
-                                        <option>Київська</option>
-                                        <option>Коцюбинського</option>
-                                    </datalist>
-                                </li>   
-                                <li class="nav-item">
-                                    <label class="nav-link pl-0 mb-0 text-nowrap" for="">Виберіть відповідального</label>
-                                    <input class="w-100" type="text" name="ingener" id="ingener" list="ingener_list">
-                                    <datalist id="ingener_list">
-                                        <option>Усі</option>
-                                        <option>Кравець</option>
-                                        <option>Семикрас</option>
-                                        <option>Лісовик</option>
-                                    </datalist>
-                                </li> 
-                                <li class="nav-item">
-                                    <label class="nav-link pl-0  text-nowrap" for=""><a href="#">Список об'єктів</a></label>
-                                </li>
+  
 
 
                                                 
@@ -51,7 +20,10 @@
                 </aside>
                 <main class="col offset-md-2 bg-faded py-3">
                 <h1 class="text-center">Список об'єктів ТОВ "Флоріан-Т"</h1>
-                
+                    <div class="float-right block-a">
+                        <a href="/object/add" class="text-secondary"><i class="fas fa-plus-square"></i></a>
+                        <a href="#" class="text-secondary"><i class="fas fa-print "></i></a>
+                    </div>
                 <table id="grid" border="1" width="100%">
                     <thead>
                         <tr>
@@ -65,7 +37,7 @@
                             <th>Дії з об'єктом</th>
                         </tr>
                     </thead>
-`                    <tbody> 
+                    <tbody> 
                         @foreach($objectFlorians as $objectFlorian)
                         <tr id="z_{{$objectFlorian->id}}">
                                              
@@ -73,14 +45,25 @@
                             <td>{{$objectFlorian->name}}</td>
                             <td>{{$objectFlorian->adress}}</td>
                             <td>{{$objectFlorian->region}}</td>
-                            <td>{{$objectFlorian->vidpovidalnuy}}</td>
+                            <td>
+                                <?php 
+                                    $id_vidpov = $objectFlorian->vidpovidalnuy - 1;
+                                    echo $users[$id_vidpov]->name;
+                                
+                                ?>
+                         
+                            </td>
                             <td>12.10.18</td>
                             <td>ТО 1</td>
-                            <td><a href="/object/edit/{{$objectFlorian->id}}"><i class="far fa-edit text-primary"></i></a> | <a href="/object/remove/{{$objectFlorian->id}}"><i class="far fa-trash-alt text-danger"></i></a></td>
+                            <td>
+                                <a href="/object/view/{{$objectFlorian->id}}"><i class="far fa-eye"></i></a> | 
+                                <a href="/object/edit/{{$objectFlorian->id}}"><i class="far fa-edit text-primary"></i></a> |
+                                <a href="/object/remove/{{$objectFlorian->id}}"><i class="far fa-trash-alt text-danger"></i></a>
+                            </td>
                         </tr>
 
                         @endforeach    
-                    </tbody>`
+                    </tbody>
                 </table>
                 </main>
 

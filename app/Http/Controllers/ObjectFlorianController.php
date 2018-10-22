@@ -10,6 +10,7 @@ use App\User;
 class ObjectFlorianController extends Controller
 {
     function create(Request $request) {
+
         $object = new ObjectFlorian();
         $object->name = $request->name;
         $object->adress = $request->adress;
@@ -31,23 +32,47 @@ class ObjectFlorianController extends Controller
   
         return redirect('/');
       }
+      function list() {
+        $users = User::all();
+        return view('object.add', [
+          'users' => $users 
 
-      public function show() {
-          return view('home',[
-              
-            'objectFlorians' => ObjectFlorian::all()
           ]);
-           
+          
+      }
+      public function show() {
+        $objectFlorians = ObjectFlorian::all();
+        $users = User::all();
+
+
+
+        
+          return view('home',[
+            'objectFlorians' => $objectFlorians,
+            'users' => $users 
+          ]);
+         
          
       }
 
+
       function edit($id) {
-         
+        $users = User::all();
         $ObjectFlorian = ObjectFlorian::find($id);
       return view('object.edit', [
-        'ObjectFlorian' => $ObjectFlorian
+        'ObjectFlorian' => $ObjectFlorian->first(),
+        'users' => $users 
       ]);
+    
 
+      }
+      function view($id) {
+        $users = User::all();
+        $ObjectFlorian = ObjectFlorian::find($id);
+      return view('object.view', [
+        'ObjectFlorian' => $ObjectFlorian->first(),
+        'users' => $users 
+      ]);
       }
       function update(Request $request) {
         $object = ObjectFlorian::find($request->id);

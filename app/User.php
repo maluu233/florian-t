@@ -31,4 +31,5 @@ class User extends Authenticatable
     public function objects() {
         return $this->hasMany('App\ObjectFlorian', 'vidpovidalnuy', 'id');
     }
+    
 }
